@@ -1,0 +1,137 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model About {
+  id                String   @id @default(uuid())
+  title             String
+  subtitle          String?
+  bio               String
+  avatarUrl         String?
+  resumeUrl         String?
+  email             String?
+  phone             String?
+  location          String?
+  githubUrl         String?
+  linkedinUrl       String?
+  twitterUrl        String?
+  yearsExperience   Int      @default(0)
+  completedProjects Int      @default(0)
+  happyClients      Int      @default(0)
+  updatedAt         DateTime @updatedAt
+}
+
+model Skill {
+  id          String   @id @default(uuid())
+  name        String
+  category    String   @default("Frontend") // Frontend, Backend, Database, DevOps/Tools
+  proficiency Int      @default(80)         // 0 to 100
+  icon        String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Project {
+  id              String   @id @default(uuid())
+  title           String
+  description     String
+  longDescription String?
+  imageUrl        String?
+  demoUrl         String?
+  githubUrl       String?
+  tags            String   // Comma-separated or JSON list of tech keywords
+  featured        Boolean  @default(false)
+  order           Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Blog {
+  id         String   @id @default(uuid())
+  title      String
+  slug       String   @unique
+  excerpt    String
+  content    String
+  coverImage String?
+  category   String   @default("Tech")
+  published  Boolean  @default(true)
+  readTime   String   @default("5 min read")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Experience {
+  id          String   @id @default(uuid())
+  role        String
+  company     String
+  companyUrl  String?
+  location    String?
+  startDate   String
+  endDate     String?
+  current     Boolean  @default(false)
+  description String
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Testimonial {
+  id         String   @id @default(uuid())
+  clientName String
+  position   String
+  company    String
+  quote      String
+  avatarUrl  String?
+  rating     Int      @default(5)
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  icon        String?
+  price       String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  subject   String?
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Media {
+  id           String   @id @default(uuid())
+  filename     String
+  originalName String
+  mimeType     String
+  size         Int
+  url          String
+  createdAt    DateTime @default(now())
+}
